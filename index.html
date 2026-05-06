@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Wifey❤️🧿</title>
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* PASSWORD */
+#lock{
+  position:fixed;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  background:black;
+  z-index:999;
+}
+
+input{
+  padding:10px;
+  font-size:18px;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+}
+
+button{
+  padding:10px 20px;
+  margin-top:10px;
+  background:#ff0066;
+  border:none;
+  color:white;
+  border-radius:20px;
+  cursor:pointer;
+}
+
+/* COUNTDOWN */
+#countdown{
+  font-size:22px;
+  color:#ff66cc;
+  margin-bottom:10px;
+}
+
+/* MAIN */
+#screen{
+  display:none;
+}
+
+#bg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:url("photo1.jpg") center/cover no-repeat;
+  filter:blur(20px);
+  transform:scale(1.2);
+  z-index:-1;
+}
+
+h1{
+  color:#ff66cc;
+}
+
+#msg{
+  padding:20px;
+  font-size:14px;
+  line-height:1.6;
+  white-space:pre-line;
+  min-height:120px;
+}
+
+img{
+  width:250px;
+  border-radius:15px;
+}
+
+#final{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  color:#ff4da6;
+  opacity:0;
+  transition:1s;
+}
+
+.show{opacity:1;}
+
+.heart{
+  position:absolute;
+  color:pink;
+  font-size:20px;
+  animation:float 5s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh); opacity:0;}
+  50%{opacity:1;}
+  100%{transform:translateY(-10vh); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<div id="lock">
+  <h2>Enter Password 💖</h2>
+
+  <h2 id="countdown"></h2>
+
+  <input type="password" id="pass" placeholder="Password">
+  <button id="enterBtn" onclick="checkPass()" disabled>Enter</button>
+</div>
+
+<!-- MAIN -->
+<div id="bg"></div>
+
+<div id="screen">
+  <h1>HAPPY BIRTHDAY BHALU💋🧿</h1>
+
+  <p id="msg"></p>
+
+  <img id="img" src="photo1.jpg">
+  <br><br>
+  <button onclick="playMusic()">Play 🎵</button>
+</div>
+
+<div id="final">I LOVE YOU ❤️🧿👸🏻</div>
+
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+let photos=["photo1.jpg","photo2.jpg","photo3.jpg","photo4.jpg","photo5.jpg"];
+let i=0;
+let j=0;
+
+let text=`Panoo, there are 3 dates that are very important to me.
+The first is 18 February 2024 — the day we talked for the first time on chat.
+The second is 5 July 2025 — the day we came into a relationship.
+And the last, the most special one, is 7 May — my Bhaluuu’s birthday.
+Happy Birthday My Bhaluuu 🎂❤️💋
+I pray to God that all your dreams come true. Always keep smiling and always be mine 🙈
+May you get all the happiness in the world.
+Honestly, today I should have been with you celebrating your birthday. I really wanted to celebrate it with you, but because of my exams, it’s not possible right now 🥺
+I feel really bad about this…
+But it’s just this one birthday that I’m not able to celebrate with you. From now on, I’ll always be there with you, Panoo
+Happiest Birthday Wifeyyy 🎂👸🏻🧿💋✨
+
+Tumse hi shuru, tumpe hi khatam meri har baat ho,
+Tum paas raho to har din khaas ho…
+Dil chahta hai bas itna,
+Har janam mein tum hi meri saath ho. ❤️`;
+
+/* 🔒 COUNTDOWN (May 7, 2026) */
+let targetDate = new Date("May 7, 2026 00:00:00").getTime();
+
+let timer = setInterval(function(){
+
+  let now = new Date().getTime();
+  let diff = targetDate - now;
+
+  if(diff <= 0){
+    clearInterval(timer);
+    document.getElementById("countdown").innerHTML = "Now Enter 💖";
+    document.getElementById("enterBtn").disabled = false;
+    return;
+  }
+
+  let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById("countdown").innerHTML =
+    days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+
+},1000);
+
+function checkPass(){
+
+  if(document.getElementById("enterBtn").disabled){
+    alert("Wait for countdown 💖");
+    return;
+  }
+
+  if(document.getElementById("pass").value==="PANO123"){
+    
+    document.getElementById("lock").style.display="none";
+    document.getElementById("screen").style.display="block";
+
+    document.getElementById("msg").innerHTML="";
+    typeText();
+    slideShow();
+    hearts();
+
+    let audio = document.getElementById("music");
+    audio.currentTime = 0;
+    audio.play();
+
+  }else{
+    alert("Wrong Password ❌");
+  }
+}
+
+function typeText(){
+  if(j < text.length){
+    document.getElementById("msg").innerHTML += text.charAt(j);
+    j++;
+    setTimeout(typeText,25);
+  }
+}
+
+function slideShow(){
+  setInterval(()=>{
+    document.getElementById("img").src=photos[i];
+    document.getElementById("bg").style.backgroundImage="url('"+photos[i]+"')";
+    i=(i+1)%photos.length;
+  },3000);
+}
+
+function playMusic(){
+  let audio = document.getElementById("music");
+  audio.currentTime = 0;
+  audio.play().then(()=>{
+    document.getElementById("final").classList.add("show");
+  }).catch(()=>{
+    alert("Tap once anywhere then press Play 💖");
+  });
+}
+
+function hearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  },300);
+}
+
+</script>
+
+</body>
+  </html>
